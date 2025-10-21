@@ -19,4 +19,18 @@ def max_body_mass_by_island(df):
     df = df.dropna(subset=['island', 'body_mass_g', 'species'])
     grouped = df.loc[df.groupby('island')['body_mass_g'].idmax(), ['island', 'species', 'body_mass_g']]
     result = grouped.set_index('island').to_dict(orient='index')
-    return result 
+    return result
+
+def save_results_to_csv(avg_flipper, max_mass, output_file="penguin_summary.csv"):
+    avg_df = pd.DataFrame(list(avg_flipper.items()), columns = ['Sex', 'Average_Flipper_Length_mm'])
+    mass_df = pd.DataFrame.from_dict(max_mass, orient='index').reset_index()
+    mass_df.rename(columns={'index': 'Island', 'species': 'Heaviest_Species', 'body_mass_g': 'Max_Body_Mass_g'}, inplace=True)
+    
+
+    summary_df = pd.concat([avg_df, mass_df], axis=1)
+    summary_df.to_csv(output_file, index=False)
+    print(f"Results successfully written to '{output_file}'.")
+
+def main
+
+
